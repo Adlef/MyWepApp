@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<title>Disaster Dashboard</title>
+
+<!--import script files needed from plotly and bootstrap-->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha384-tsQFqpEReu7ZLhBV2VZlAu7zcOV+rXbYlF2cqB8txI/8aZajjp4Bqd+V6D5IgvKT" crossorigin="anonymous"></script> 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+
+</head>
+
+<body>
+  {% include 'includes/_navbar.html' %}
+
+<div class="container">
+    <div class="jumbotron">
+    <div class="container">
+        <h1 class="text-center">Disaster Response Project</h1>
+        <p class="text-center">Analyzing message data for a disaster response</p>
+        <hr />
+      
+        <div class="row">
+            <div class="col-lg-12 form-group-lg">
+                <form action="/disasters_2_2" method="get">
+                    <input type="text" class="form-control form-control-lg" name="query" placeholder="Enter a message to classify">
+                    <div class="col-lg-offset-5">
+                        <button type="submit" class="btn btn-lg btn-success">Classify Message</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        {% block message %}
+        {% endblock %}
+    </div>
+</div>
+  
+<div class="container">
+
+    {% block content %}
+        <div class="page-header">
+            <h1 class="text-center">Overview of Training Dataset</h1>
+        </div>
+    <!-- 
+  	<div>
+        <h3 class="text-center"> Words with highest importance (weights) after training</h3>
+        <h4 class="text-center"> The larger words indicate more frequency among 36 categories</h4>
+        <!-- <img src="static/wordcloud_twitter_disaster.jpg" alt="Word Cloud" > 
+    </div> -->
+
+    {% endblock %}
+
+</div>
+</div>
+<div class="container">
+ 
+    {% for id in ids %}
+        <div id="{{id}}"></div>
+    {% endfor %}
+	
+</div>
+
+<script type="text/javascript">
+    const graphs = {{graphJSON | safe}};
+    const ids = {{ids | safe}};
+    for(let i in graphs) {
+        Plotly.plot(ids[i], graphs[i].data, graphs[i].layout);
+    }
+</script>
+
+
+</body>
+
+</html>
