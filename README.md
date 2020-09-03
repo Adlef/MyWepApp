@@ -20,7 +20,7 @@ The content will be updated time to time.
 
 ## Structure of the Project <a name="structure"></a>
 
-'''
+```
 |   myapp.py
 |   nltk.txt
 |   Procfile
@@ -73,7 +73,7 @@ The content will be updated time to time.
     \---WorldHappiness
             wrangle_data_happiness.py
             __init__.py
-'''
+```
 The project is based on the following structure:
 - a data folder where data documents are placed.
 - wrangling_script folder where the data is being cleaned and prepared to be visualized in the html code.
