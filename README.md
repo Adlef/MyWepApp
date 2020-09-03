@@ -16,6 +16,7 @@ Currently, it has:
 - links to my linkedin & github.
 - links to my articles.
 - a first WorldHappiness page which has some initial graphics.
+- a Disaster Messages Project which, based on a text query, classifies the text into different disaster categories.
 
 The content will be updated time to time.
 
