@@ -9,10 +9,17 @@ def return_figures_disaster():
     df_data = pd.read_sql("SELECT * FROM DisasterMessages", engine)
     df_word = pd.read_sql("SELECT * FROM Words", engine)
     category_names = list(df_data.columns[4:])
+        
+    #update custom pickler
+    class CustomUnpickler(pickle.Unpickler):
 
-    # loading model
-    with open('wrangling_scripts/DisasterMessages/model/model_ada.sav', 'rb') as f:
-        model = pickle.load(f)
+        def find_class(self, module, name):
+            if name == 'tokenize':
+                from wrangling_scripts.DisasterMessages.train_classifier import tokenize, get_wordnet_pos
+                return tokenize
+            return super().find_class(module, name)
+
+    model = CustomUnpickler(open('wrangling_scripts/DisasterMessages/model/model_ada.sav', 'rb')).load()
 
     # selecting categories for visualisation
     df_word_subset = df_word[df_word['category_name'].isin(['cold', 'storm', 'shelter', 'weather_related', 'clothing', 'infrastructure_related', 'buildings'])]
